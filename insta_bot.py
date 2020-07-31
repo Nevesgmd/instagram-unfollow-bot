@@ -48,10 +48,10 @@ class InstaBot:
                                                          'header/section/ul/li[3]/a/span'))) \
             .click()
         following = self.get_names(num_following)
-        num_followers= int(WebDriverWait(self.__driver, 20)
-                           .until(ec.element_to_be_clickable((By.XPATH, '//*[@id="react-root"]'
-                                                                        '/section/main/div/header/'
-                                                                        'section/ul/li[2]/a/span'))).text)
+        num_followers = int(WebDriverWait(self.__driver, 20)
+                            .until(ec.element_to_be_clickable((By.XPATH, '//*[@id="react-root"]'
+                                                                         '/section/main/div/header/'
+                                                                         'section/ul/li[2]/a/span'))).text)
         WebDriverWait(self.__driver, 20) \
             .until(ec.element_to_be_clickable((By.XPATH, '//*[@id="react-root"]/section/main/div/'
                                                          'header/section/ul/li[2]/a/span'))) \
@@ -75,10 +75,17 @@ class InstaBot:
             .click()
         return names
 
+    def get_unfollowers(self):
+        return [username for username in self.__following if username not in self.__followers]
+
+    def get_not_following_followers(self):
+        return [username for username in self.__followers if username not in self.__following]
+
 
 user_name = str(input('Digite seu nome de usuário, por favor:'))
 user_password = getpass('Digite sua senha, por favor:')
 
 insta_bot = InstaBot(user_name, user_password)
 insta_bot.get_following_followers()
-
+print(insta_bot.get_unfollowers())
+print(insta_bot.get_not_following_followers())
