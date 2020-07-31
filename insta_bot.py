@@ -13,6 +13,8 @@ class InstaBot:
         self.__driver = webdriver.Chrome(ChromeDriverManager().install())
         self.__username = username
         self.__user_password = user_pw
+        self.__following = list()
+        self.__followers = list()
         self.__driver.get("https://instagram.com")
         self.__driver.set_window_size(1200, 700)
         self.login()
@@ -32,7 +34,7 @@ class InstaBot:
             .until(ec.element_to_be_clickable((By.XPATH, "/html/body/div[4]/div/div/div/div[3]/button[2]"))) \
             .click()
 
-    def get_unfollowers(self):
+    def get_following_followers(self):
         WebDriverWait(self.__driver, 20)\
             .until(ec.element_to_be_clickable((By.XPATH, '//*[@id="react-root"]/section/main/section/'
                                                          'div[3]/div[1]/div/div[2]/div[1]/a')))\
@@ -46,7 +48,18 @@ class InstaBot:
                                                          'header/section/ul/li[3]/a/span'))) \
             .click()
         following = self.get_names(num_following)
-        print(following)
+        num_followers= int(WebDriverWait(self.__driver, 20)
+                           .until(ec.element_to_be_clickable((By.XPATH, '//*[@id="react-root"]'
+                                                                        '/section/main/div/header/'
+                                                                        'section/ul/li[2]/a/span'))).text)
+        WebDriverWait(self.__driver, 20) \
+            .until(ec.element_to_be_clickable((By.XPATH, '//*[@id="react-root"]/section/main/div/'
+                                                         'header/section/ul/li[2]/a/span'))) \
+            .click()
+        followers = self.get_names(num_followers)
+
+        self.__following = following
+        self.__followers = followers
 
     def get_names(self, num_users):
         scroll_box = WebDriverWait(self.__driver, 20) \
@@ -67,4 +80,5 @@ user_name = str(input('Digite seu nome de usuário, por favor:'))
 user_password = getpass('Digite sua senha, por favor:')
 
 insta_bot = InstaBot(user_name, user_password)
-insta_bot.get_unfollowers()
+insta_bot.get_following_followers()
+
