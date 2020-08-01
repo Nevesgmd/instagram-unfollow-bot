@@ -20,6 +20,7 @@ class InstaBot:
         self.login()
 
     def login(self):
+        """Login the user and close initial popups."""
         WebDriverWait(self.__driver, 20)\
             .until(ec.element_to_be_clickable((By.XPATH, "//input[@name=\"username\"]")))\
             .send_keys(self.__username)
@@ -35,6 +36,7 @@ class InstaBot:
             .click()
 
     def get_following_followers(self):
+        """Get the following/followers users and store to private attributes."""
         WebDriverWait(self.__driver, 20)\
             .until(ec.element_to_be_clickable((By.XPATH, '//*[@id="react-root"]/section/main/section/'
                                                          'div[3]/div[1]/div/div[2]/div[1]/a')))\
@@ -47,6 +49,7 @@ class InstaBot:
             .until(ec.element_to_be_clickable((By.XPATH, '//*[@id="react-root"]/section/main/div/'
                                                          'header/section/ul/li[3]/a/span'))) \
             .click()
+        # Calling get_names()
         following = self.get_names(num_following)
         num_followers = int(WebDriverWait(self.__driver, 20)
                             .until(ec.element_to_be_clickable((By.XPATH, '//*[@id="react-root"]'
@@ -56,19 +59,28 @@ class InstaBot:
             .until(ec.element_to_be_clickable((By.XPATH, '//*[@id="react-root"]/section/main/div/'
                                                          'header/section/ul/li[2]/a/span'))) \
             .click()
+        # Calling get_names()
         followers = self.get_names(num_followers)
 
+        # Setting following/followers attributes
         self.__following = following
         self.__followers = followers
 
     def get_names(self, num_users):
+        """
+        Get usernames in the following/followers panel.
+        :param num_users: number of following/followers users
+        :return: list of following/followers usernames
+        """
         scroll_box = WebDriverWait(self.__driver, 20) \
             .until(ec.element_to_be_clickable((By.XPATH, '/html/body/div[4]/div/div/div[2]')))
+        # I decided to iterate num_users/9 times because it works well on most speed connections
         for i in range(int(num_users/9)):
             self.__driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", scroll_box)
             sleep(randint(500, 1250)/1000)
         print('Finished scrolling.')
         links = scroll_box.find_elements_by_tag_name('a')
+        # Getting names of the elements and storing to a list
         names = [name.text for name in links if name.text != '']
         WebDriverWait(self.__driver, 20) \
             .until(ec.element_to_be_clickable((By.XPATH, '/html/body/div[4]/div/div/div[1]/div/div[2]/button'))) \
@@ -76,9 +88,11 @@ class InstaBot:
         return names
 
     def get_unfollowers(self):
+        """Return usernames that you're following and doesn't follow back."""
         return [username for username in self.__following if username not in self.__followers]
 
     def get_not_following_followers(self):
+        """Return usernames that are following you but you're not following back."""
         return [username for username in self.__followers if username not in self.__following]
 
 
