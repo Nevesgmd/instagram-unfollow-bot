@@ -5,26 +5,22 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from time import sleep
 from random import randint
-from getpass import getpass
 
 
 class InstaBot:
-    def __init__(self, username, user_pw):
+    def __init__(self):
         self.__driver = webdriver.Chrome(ChromeDriverManager().install())
-        self.__username = username
-        self.__user_password = user_pw
         self.__following = list()
         self.__followers = list()
+
+    def login(self, username, pw):
+        """Login the user and close initial popups."""
         self.__driver.get("https://instagram.com")
         self.__driver.set_window_size(1200, 700)
-        self.login()
-
-    def login(self):
-        """Login the user and close initial popups."""
         WebDriverWait(self.__driver, 20)\
             .until(ec.element_to_be_clickable((By.XPATH, "//input[@name=\"username\"]")))\
-            .send_keys(self.__username)
-        self.__driver.find_element_by_xpath("//input[@name=\"password\"]").send_keys(self.__user_password)
+            .send_keys(username)
+        self.__driver.find_element_by_xpath("//input[@name=\"password\"]").send_keys(pw)
         WebDriverWait(self.__driver, 20)\
             .until(ec.element_to_be_clickable((By.XPATH, '//button[@type="submit"]')))\
             .click()
@@ -89,17 +85,5 @@ class InstaBot:
 
     def get_unfollowers(self):
         """Return usernames that you're following and doesn't follow back."""
+        self.get_following_followers()
         return [username for username in self.__following if username not in self.__followers]
-
-    def get_not_following_followers(self):
-        """Return usernames that are following you but you're not following back."""
-        return [username for username in self.__followers if username not in self.__following]
-
-
-user_name = str(input('Digite seu nome de usuário, por favor:'))
-user_password = getpass('Digite sua senha, por favor:')
-
-insta_bot = InstaBot(user_name, user_password)
-insta_bot.get_following_followers()
-print(insta_bot.get_unfollowers())
-print(insta_bot.get_not_following_followers())

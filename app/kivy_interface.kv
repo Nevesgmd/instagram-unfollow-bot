@@ -20,7 +20,7 @@ PageManager:
 
     FloatLayout:
         Image:
-            source: 'images/project-logo.png'
+            source: 'app/images/project-logo.png'
             size_hint_x: 0.8
             allow_stretch: True
             pos_hint: {'x': 0.105, 'top':1.2}
@@ -42,7 +42,7 @@ PageManager:
             pos_hint: {'x': 0.2, 'top':0.33}
             text: 'Entrar'
             on_release:
-                app.get_login_values()
+                app.login()
 
         Label:
             text: 'por: Gabriel Medeiros das Neves'
