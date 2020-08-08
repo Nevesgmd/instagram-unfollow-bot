@@ -1,0 +1,43 @@
+h1{
+    position: relative;
+    top: 100px;
+    text-align: center;
+    color: #FFF;
+}
+
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    position: relative;
+    left: 30%;
+    top: 100px;
+    width: 40vw;
+    height: 15vw;
+    min-height: 190px;
+    background-color: rgb(217, 217, 230);
+    border-radius: 5px;
+}
+
+input{
+    position: relative;
+    top: 20px;
+    left: 15%;
+    width: 70%;
+    margin: 5px;
+    padding: 12px;
+    border: 2px groove rgb(200, 200, 210);
+    border-radius: 4px;
+    outline: none;
+}
+
+#submit{
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}

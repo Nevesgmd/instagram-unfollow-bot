@@ -1,10 +1,15 @@
 <html>
 <head>
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/base.css') }}"/>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}"/>
 	<title>Login</title>
 </head>
 <body>
-	<span>Aqui será a página login</span>
+	<h1>Login Instagram</h1>
+	<div class="login-form">
+		<input type="text" id="username" placeholder="Usuário">
+		<input type="password" id="password" placeholder="Senha">
+		<input type="submit" id="submit" value="Login">
+	</div>
 </body>
 </html>
