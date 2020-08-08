@@ -87,3 +87,7 @@ class InstaBot:
         """Return usernames that you're following and doesn't follow back."""
         self.get_following_followers()
         return [username for username in self.__following if username not in self.__followers]
+
+    @property
+    def driver(self):
+        return self.__driver
