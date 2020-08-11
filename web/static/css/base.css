@@ -7,3 +7,10 @@ body {
   background-color: rgba(81, 91, 212, 0.7);
   background-color: rgb(81, 91, 212);
 }
+
+h1{
+    position: relative;
+    top: 100px;
+    text-align: center;
+    color: #FFF;
+}

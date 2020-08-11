@@ -9,11 +9,6 @@ def home():
     return redirect(url_for('login_page'))
 
 
-@app.route("/unfollowers/")
-def unfollowers_page():
-    return render_template('unfollowers.html')
-
-
 @app.route("/login/", methods=["POST", "GET"])
 def login_page():
     if request.method == "POST":
@@ -21,9 +16,14 @@ def login_page():
         pw = request.form["password"]
         bot = InstaBot()
         bot.login(user, pw)
-        print(bot.get_unfollowers())
-        return redirect(url_for('unfollowers_page'))
+        unfollowers = bot.get_unfollowers()
+        return render_template('unfollowers.html', unfollowers=unfollowers)
     return render_template('login.html')
+
+
+@app.route("/unfollowers/")
+def unfollowers_page():
+    return render_template('unfollowers.html')
 
 
 if __name__ == "__main__":

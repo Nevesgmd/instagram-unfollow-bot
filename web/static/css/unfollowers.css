@@ -1,0 +1,48 @@
+.unfollowers-box{
+    position: relative;
+    left: 30%;
+    top: 100px;
+    width: 40vw;
+    height: 15vw;
+    min-height: 190px;
+    background-color: rgb(217, 217, 230);
+    border-radius: 5px;
+    overflow-y: scroll;
+}
+
+#scroll-unfollowers::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 5px;
+	background-color: #F5F5F5;
+}
+
+#scroll-unfollowers::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: rgb(217, 217, 230);
+	border-radius: 5px;
+}
+
+#scroll-unfollowers::-webkit-scrollbar-thumb
+{
+	border-radius: 5px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
+li{
+    list-style: none;
+    padding: 5px;
+    color: rgb(60, 60, 60);
+    font-size: 18px;
+}
+
+ul li:after {
+    content: "";
+    display: block;
+    height: 1px;
+    width: 90%;
+    margin: 0;
+    background: rgb(160, 160, 160);
+}
