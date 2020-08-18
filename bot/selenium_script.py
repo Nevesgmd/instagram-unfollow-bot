@@ -88,6 +88,9 @@ class InstaBot:
         self.get_following_followers()
         return [username for username in self.__following if username not in self.__followers]
 
+    def quit(self):
+        self.__driver.quit()
+
     @property
     def driver(self):
         return self.__driver
