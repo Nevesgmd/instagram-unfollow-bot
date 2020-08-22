@@ -14,9 +14,15 @@ class InstaBot:
         self.__followers = list()
 
     def login(self, username, pw):
-        """Login the user and close initial popups."""
+        """
+        Login the user and close initial popups.
+        :param username: Instagram username (str)
+        :param pw: Instagram password (str)
+        :return:
+        """
         self.__driver.get("https://instagram.com")
         self.__driver.set_window_size(1200, 700)
+        # Login section
         WebDriverWait(self.__driver, 20)\
             .until(ec.element_to_be_clickable((By.XPATH, "//input[@name=\"username\"]")))\
             .send_keys(username)
@@ -24,6 +30,7 @@ class InstaBot:
         WebDriverWait(self.__driver, 20)\
             .until(ec.element_to_be_clickable((By.XPATH, '//button[@type="submit"]')))\
             .click()
+        # Closing pop-ups
         WebDriverWait(self.__driver, 20)\
             .until(ec.element_to_be_clickable((By.XPATH, '//*[@id="react-root"]/section/main/div/div/div/div/button')))\
             .click()
@@ -70,7 +77,7 @@ class InstaBot:
         """
         scroll_box = WebDriverWait(self.__driver, 20) \
             .until(ec.element_to_be_clickable((By.XPATH, '/html/body/div[4]/div/div/div[2]')))
-        # I decided to iterate num_users/9 times because it works well on most speed connections
+        # I decided to iterate num_users/9 times because it works well on most internet speed connections
         for i in range(int(num_users/9)):
             self.__driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", scroll_box)
             sleep(randint(500, 1250)/1000)
@@ -84,11 +91,12 @@ class InstaBot:
         return names
 
     def get_unfollowers(self):
-        """Return usernames that you're following and doesn't follow back."""
+        """Call get_following_followers() and return usernames that you're following and doesn't follow back."""
         self.get_following_followers()
         return [username for username in self.__following if username not in self.__followers]
 
     def quit(self):
+        """Close Chrome webdriver"""
         self.__driver.quit()
 
     @property

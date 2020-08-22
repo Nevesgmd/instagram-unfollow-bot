@@ -19,6 +19,7 @@ def login_page():
         pw = request.form["password"]
         # Defining global variable inside function so it only opens the Chrome Driver when user click Login button
         global bot
+        # Instantiating InstaBot and login to Instagram
         bot = InstaBot()
         bot.login(user, pw)
         # Redirecting to the unfollowers_page
